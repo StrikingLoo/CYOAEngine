@@ -1,0 +1,91 @@
+<html>
+<header><h1>Choose Your Own Adventure Engine</h1></header>
+<body><div id='upper'>
+<h3 id='title'>Welcome, player!</h3></div>
+<div id='options'></div>
+
+
+</body>
+</html>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script> 
+playerName = ''
+$(document).ready(initialize())
+
+function initialize(){
+	$('#title').html('Welcome, player! What is your name?')
+	let btn = document.createElement('button')
+
+	btn.appendChild(document.createTextNode('Submit'))
+	let nameInput = document.createElement('input')	
+	
+	let myDiv = document.createElement('div')
+	btn.addEventListener('click', 
+		function setName(){
+				playerName = nameInput.value
+				setState(0)
+				myDiv.remove()
+		})
+	myDiv.appendChild(nameInput)
+	myDiv.appendChild(btn)
+	document.getElementById('upper').appendChild(myDiv)
+	console.log(playerName)
+}
+	
+states = [
+	{'title':'only really one choice','options':[{'text':'move forward','leadsTo':1}]},
+	{'title':'choose your next step','options':[{'text':'waste time','leadsTo':1},{'text':'Go back to the beginning','leadsTo':0}]}
+]
+function setState(id){
+	fetchedState = states[id]
+	options = fetchedState['options']
+	$('#title').html(fetchedState['title'])
+	$('#options').html('')
+	for(let i = 0 ; i<options.length ; i++){
+	var thisOption = document.createElement('p2')
+	
+	thisOption.innerHTML = options[i].text
+	 thisOption.addEventListener('click',function(){ setState(options[i].leadsTo) })
+	
+		document.getElementById('options').appendChild(thisOption)
+		document.getElementById('options').appendChild(document.createElement('br'))
+		document.getElementById('options').appendChild(document.createElement('br')) 
+	} 
+	
+
+}
+
+
+</script>
+<style>
+body {
+	background-color:black;
+	color:white;
+	text-align:center;
+	}
+
+p2 {
+	border-width:5px;
+	border-color:orange;
+	border-style:dashed;	
+	padding:5px;
+	font-size:24px; 
+	}
+
+h3 {
+	border-width:5px;
+	border-color:red;
+	border-style:dotted;	
+	padding:5px;
+	font-size:28px; 
+	}
+input {font-size:22px}
+button {
+	background-color:#AAA;
+	font-size:22px;
+	 
+	}
+</style>
+
